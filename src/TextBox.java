@@ -38,7 +38,7 @@ public class TextBox implements Runnable{
 					Speech = "";
 					Start.vPlayer.setEvent(false);
 				}
-				playSound();
+				//playSound();
 				draw();
 				nextTime += delta;
 			}

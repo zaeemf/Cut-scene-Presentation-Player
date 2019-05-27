@@ -2,6 +2,11 @@
 	
 	//JFrame to hold the Player Panel
 	public class PlayerWindow extends JFrame{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public PlayerWindow(PlayerPanel x){
 			add(x);
 			setTitle("Cut-scene Player");

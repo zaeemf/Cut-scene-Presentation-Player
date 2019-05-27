@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -21,11 +20,10 @@ public class PlayerPanel extends JPanel implements MouseListener, MouseMotionLis
 	private static Image bg, textbox, exit;
 	private static Graphics2D g2d;
 	private static File script;
-	private static Thread t1= new Thread(new Player());
+	private static Thread t1= new Thread(new VideoPlayer());
 	private static String scriptName, currentLine;
 	private static int x_val = 167, y_val = 484, sx1 = 0, sy1 = 0, sx2 = 166, sy2 = 93;
 	private static Boolean event = false, textComplete = true, text = false;
-	private static FontMetrics fm;
 	private static Font font = new Font("TimesNewRoman", Font.PLAIN, 18);
 
 	public PlayerPanel(File script, String scriptName) {
@@ -50,7 +48,7 @@ public class PlayerPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	public void paint(Graphics g) {
 		g.setFont(font);
-		fm = g.getFontMetrics();
+		g.getFontMetrics();
 		g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
 		g2d.drawImage(bg, 0, 0, this);
@@ -66,16 +64,10 @@ public class PlayerPanel extends JPanel implements MouseListener, MouseMotionLis
 	public void startThread() {
 		t1.start();
 	}
-	public FontMetrics getFm() {
-		return fm;
-	}
-
-	public void setFm(FontMetrics fm) {
-		PlayerPanel.fm = fm;
-	}
-
 	public void setImage(Image current){
 		bg = current;
+		repaint();
+		revalidate();
 	}
 
 	public void setScript(File curScript){
@@ -100,9 +92,6 @@ public class PlayerPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	public void setEvent(Boolean x) {
 		event = x;
-	}
-
-	public void setDone(Boolean x){
 	}
 
 	public Boolean getTextComplete() {
@@ -145,7 +134,10 @@ public class PlayerPanel extends JPanel implements MouseListener, MouseMotionLis
 		return y_val;
 	}
 
-
+	public void update() {
+		repaint();
+		revalidate();
+	}
 	////Implementations
 	//relevant
 	@Override
@@ -154,7 +146,7 @@ public class PlayerPanel extends JPanel implements MouseListener, MouseMotionLis
 		if(e.getX() >= (1280-160) && e.getY() <= (93)){
 			JFrame confirmbox = new JFrame("Exit");
 
-			if (JOptionPane.showConfirmDialog( confirmbox,"confirm if you Want to Exit","Name of the Application or Title",
+			if (JOptionPane.showConfirmDialog( confirmbox,"confirm if you Want to Exit","Cut-scene Player",
 					JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
 				System.exit(0);
 			}
